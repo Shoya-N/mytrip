@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 use App\Http\Controllers\Admin\TripController;
 Route::controller(TripController::class)->prefix('admin')->group(function() {
-    Route::get('trip/create', 'add');
+    Route::get('trip/create', 'add')->middleware('auth');
 });
 
 Auth::routes();
