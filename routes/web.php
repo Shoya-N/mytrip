@@ -17,9 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-use App\Http\Controllers\Admin\TripController;
-Route::controller(TripController::class)->prefix('admin')->group(function() {
-    Route::get('trip/create', 'add')->middleware('auth');
+use App\Http\Controllers\TripController;
+Route::controller(TripController::class)->prefix('trip')->name('trip.')->middleware('auth')->group(function () {
+    Route::get('create', 'add')->name('add');
+    Route::post('create', 'create')->name('create');
 });
 
 Auth::routes();
