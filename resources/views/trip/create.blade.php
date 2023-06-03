@@ -34,7 +34,7 @@
                     <div class="form-group row">
                         <label class="col-md-2">GoogleMap</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="address"　value="" placeholder="名称or住所を入力してください。">
+                            <input type="text" class="form-control" name="map"　value="" placeholder="住所を入力してください。">
                         </div>
                     </div>
                     @csrf

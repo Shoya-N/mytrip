@@ -21,6 +21,10 @@ use App\Http\Controllers\TripController;
 Route::controller(TripController::class)->prefix('trip')->name('trip.')->middleware('auth')->group(function () {
     Route::get('create', 'add')->name('add');
     Route::post('create', 'create')->name('create');
+    Route::get('', 'index')->name('index');
+    Route::get('edit', 'edit')->name('edit');
+    Route::post('edit', 'update')->name('update');
+    Route::get('delete', 'delete')->name('delete');
 });
 
 Auth::routes();
