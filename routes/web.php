@@ -30,3 +30,7 @@ Route::controller(TripController::class)->prefix('trip')->name('trip.')->middlew
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+use App\Http\Controllers\UserController;
+Route::get('/users', [ UserController::class, 'index']);

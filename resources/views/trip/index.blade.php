@@ -1,64 +1,74 @@
 @extends('layouts.app')
-@section('title', 'ホーム')
+@section('title', 'ホーム画面')
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <h2>ホーム</h2>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <a href="{{ route('trip.add') }}" role="button" class="btn btn-primary">新規作成</a>
-            </div>
-            <div class="col-md-8">
-                <form action="{{ route('trip.index') }}" method="get">
-                    <div class="form-group row">
-                        <label class="col-md-2">コメント</label></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
-                        </div>
-                        <div class="col-md-2">
-                            @csrf
-                            <input type="submit" class="btn btn-primary" value="検索">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="list-news col-md-12 mx-auto">
-                <div class="row">
-                    <table class="table table-dark">
-                        <thead>
-                            <tr>
-                                <th width="10%">ID</th>
-                                <th width="20%">画像</th>
-                                <th width="50%">コメント</th>
-                                <th width="20%">GoogleMap</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($posts as $trip)
-                                <tr>
-                                    <th>{{ $trip->id }}</th>
-                                    <td>{{ Str::limit($trip->image, 100) }}</td>
-                                    <td>{{ Str::limit($trip->body, 250) }}</td>
-                                    <td>
-                                        <a href='https://www.google.com/maps/search/?api=1&query={{ $trip->map }}'>map</a>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <a href="{{ route('trip.edit', ['id' => $trip->id]) }}">編集</a>
-                                        </div>
-                                        <div>
-                                            <a href="{{ route('trip.delete', ['id' => $trip->id]) }}">削除</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+        <div class="row justify-content-md-center">
+            <div class="row">
+                <div class="col-3 offset-2">
+                    <img src="{{ secure_asset('storage/icon/icon.png') }}" alt="" height="150" width="150">
                 </div>
+                <div class="col-2">
+                    <h2>{{ Auth::user()->name }}</h2>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-light" href="#">
+                    {{ __('messages.profilesettings') }}
+                    </button>
+                </div>
+                
+                {{-- カードの中身 --}}
+                <div class="row">
+                    <div class="card-list col-md-8 mx-auto">
+                        @foreach($posts as $trip)
+                            <div class="row">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        
+                                        <div class="icon">
+                                            <img src="{{ secure_asset('storage/icon/icon.png') }}" alt="" height="30" width="30">
+                                            <span>{{ Auth::user()->name }}</span>
+                                            <span>
+                                                <div class="nav-item dropdown">
+                                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                        ・・・
+                                                    </a>
+                                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                                    <a class="dropdown-item" href="{{ route('trip.edit', ['id' => $trip->id]) }}">編集</a>
+                                                <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="{{ route('trip.delete', ['id' => $trip->id]) }}">削除</a>
+                                                </div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        
+                                        <div class="photo">
+                                            <img src="{{ secure_asset('storage/image/'. $trip->image_path) }}" alt="" height="350" width="480">
+                                        </div>
+                                        
+                                        <h5 class="icon"><img src="{{ secure_asset('storage/icon/ハート.png') }}" alt="" height="25" width="25"></h5>
+                                        <span>
+        			                    	<a href='https://www.google.com/maps/search/?api=1&query={{ $trip->map }}'>
+                                                <img src="{{ secure_asset('storage/icon/google_maps_new_logo_icon_159147.png') }}" alt="" height="25" width="25">
+                                            </a>
+        		                        </span>
+                                        <p class="card-text">
+                                            <td>{{ Str::limit($trip->body, 250) }}</td>
+                                        </p>
+                                        <p class="card-text">
+                                            <small class="text-muted">
+                                                <div class="date">更新日
+                                                   {{--{{ $post->updated_at->format('Y年m月d日') }} --}}
+                                                </div>
+                                            </small>
+                                        </p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>    
             </div>
         </div>
     </div>

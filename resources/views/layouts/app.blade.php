@@ -15,13 +15,17 @@
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         
         <!-- Fonts -->
-        <link rel="dns-prefetch" href="https://front.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
         
         <!-- Styles -->
         {{-- Laravel標準で用意されているCSSを読み込みます --}}
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         {{-- この章の後半で作成するCSSを読み込みます --}}
         <link href="{{ secure_asset('css/common.css') }}" rel="stylesheet">
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     </head>
     <body>
         <div id="app">
@@ -44,6 +48,14 @@
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ms-auto">
                             <!-- Authentication Links -->
+                            @auth
+                                <li class="nav-item ml-2">
+                                    <a class="nav-link text-white" id="post-link" href="/trip/create">
+                                        <img src="{{ secure_asset('storage/icon/camera.jpeg') }}"  height="25" width="25">
+                                    </a>
+                                </li>
+                            @endauth
+                            
                             @guest
                                 @if (Route::has('login'))
                                     <li class="nav-item">
@@ -59,14 +71,18 @@
                             @else
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }}
+                                        <img src="{{ secure_asset('storage/icon/icon.png') }}" alt="{{ Auth::user()->name }}" height="25" width="25">
+                                        {{-- {{ Auth::user()->logo_url }}もしくはsecure_assetで画像を挿入 --}}
                                     </a>
-
+                                    
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                            {{ __('messages.logout') }}
+                                        <a class="dropdown-item" href="/trip">{{ __('messages.mypage') }}</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">{{ __('messages.profilesettings') }}</a>
+                                        <a class="dropdown-item" href="#">{{ __('messages.help') }}</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('messages.logout') }}
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -76,6 +92,7 @@
                                 </li>
                             @endguest
                         </ul>
+                        
                     </div>
                 </div>
             </nav>

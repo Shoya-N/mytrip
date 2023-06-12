@@ -10,4 +10,7 @@ return [
     'password_confirmation' => 'パスワード(確認用)',
     'remember_me' => 'ログイン情報を記憶する',
     'forgot_your_password?' => 'パスワードをお忘れですか？',
+    'mypage' => 'マイページ',
+    'profilesettings' => 'プロフィール設定',
+    'help' => 'ヘルプ',
 ];

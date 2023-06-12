@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
-// 以下の1行を追記することで、News Modelが扱えるようになる
+// 以下の1行を追記することで、Trip Modelが扱えるようになる
 use App\Models\Trip;
 
 class TripController extends Controller
