@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('trips', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::table('trips', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
-            $table->string('image_path');//->nullable();
-            $table->string('body');
-            $table->string('map')->nullable();
-            $table->timestamps();
         });
     }
 
@@ -30,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trips');
+        Schema::table('trips', function (Blueprint $table) {
+            //
+        });
     }
 };

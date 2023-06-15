@@ -12,7 +12,16 @@ class Trip extends Model
     protected $guarded = array('id');
 
     public static $rules = array(
+        'user_id',
         'image' => 'required',
         'body' => 'required',
+        'map'
     );
+    
+    protected $fillable = ['user_id','image','body','map'];
+
+    //1対多のリレーション追加
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

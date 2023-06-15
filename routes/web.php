@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,16 +24,26 @@ use App\Http\Controllers\TripController;
 Route::controller(TripController::class)->prefix('trip')->name('trip.')->middleware('auth')->group(function () {
     Route::get('create', 'add')->name('add');
     Route::post('create', 'create')->name('create');
-    Route::get('', 'index')->name('index');
+    Route::get('/', 'index')->name('index');
     Route::get('edit', 'edit')->name('edit');
     Route::post('edit', 'update')->name('update');
     Route::get('delete', 'delete')->name('delete');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/profile', [App\Http\Controllers\UserController::class,'show'])->name('profile');
+    Route::put('/profile', [App\Http\Controllers\UserController::class,'profileUpdate'])->name('profile_edit');
 });
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', 'IndexController@index')->name('index');
+    
+});
 
 use App\Http\Controllers\UserController;
-Route::get('/users', [ UserController::class, 'index']);
+Route::controller(UserController::class)->middleware('auth')->group(function () {
+    Route::get('/users', 'index')->name('users');
+    
+});
+
+
+

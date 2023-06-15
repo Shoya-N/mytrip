@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\User;
-use App\Models\Tweet;
 use App\Models\Follower;
+
+use Illuminate\Support\Facades\Auth;
+
+
 
 class UserController extends Controller
 {
@@ -51,9 +54,31 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        return view ('profile');
+    }
+    
+    
+    public function profileUpdate(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::id())],
+        ]);
+
+        try {
+            $user = Auth::user();
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->save();
+
+        } catch (\Exception $e) {
+            return back()->with('msg_error', 'プロフィールの更新に失敗しました')->withInput();
+        }
+        
+        
+        return redirect()->route('article_index')->with('msg_success', 'プロフィールの更新が完了しました');
     }
 
     /**
@@ -118,3 +143,4 @@ class UserController extends Controller
         }
     }
 }
+

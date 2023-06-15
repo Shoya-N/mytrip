@@ -69,6 +69,7 @@
                                     </li>
                                 @endif
                             @else
+                                
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         <img src="{{ secure_asset('storage/icon/icon.png') }}" alt="{{ Auth::user()->name }}" height="25" width="25">

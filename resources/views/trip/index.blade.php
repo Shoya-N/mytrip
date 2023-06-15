@@ -12,7 +12,7 @@
                     <h2>{{ Auth::user()->name }}</h2>
                 </div>
                 <div class="col-4">
-                    <button type="button" class="btn btn-light" href="#">
+                    <button type="button" class="btn btn-light" href="{{ route('trip.profile') }}"> {{-- {{ route('profile') }} --}}
                     {{ __('messages.profilesettings') }}
                     </button>
                 </div>

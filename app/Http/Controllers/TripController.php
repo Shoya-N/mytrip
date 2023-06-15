@@ -8,6 +8,7 @@ use App\Models\User;
 
 // 以下の1行を追記することで、Trip Modelが扱えるようになる
 use App\Models\Trip;
+use Auth;
 
 class TripController extends Controller
 {
@@ -40,9 +41,10 @@ class TripController extends Controller
         
         // データベースに保存する
         $trip->fill($form);
+        $trip->user_id = Auth::id();
         $trip->save();
         
-        return redirect('trip/create');
+        return redirect('trip');
     }
     
     public function index(Request $request)
@@ -52,8 +54,9 @@ class TripController extends Controller
             // 検索されたら検索結果を取得する
             $posts = Trip::where('body', $cond_title)->get();
         } else {
-            //それ以外はすべてのトリップを取得する
-            $posts = Trip::all();
+            
+            $posts = Trip::where('user_id', \Auth::user()->id)->get();
+            
         }
         return view('trip.index', ['posts' => $posts, 'cond_title' => $cond_title]);
     }
