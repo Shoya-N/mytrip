@@ -17,8 +17,6 @@ class Trip extends Model
         'body' => 'required',
         'map'
     );
-    
-    protected $fillable = ['user_id','image','body','map'];
 
     //1対多のリレーション追加
     public function user() {

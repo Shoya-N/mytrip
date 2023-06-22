@@ -48,3 +48,8 @@ body {
   border-color: #333;
   background-color: #fff;
 }
+
+.photo img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}

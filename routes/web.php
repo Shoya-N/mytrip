@@ -28,22 +28,22 @@ Route::controller(TripController::class)->prefix('trip')->name('trip.')->middlew
     Route::get('edit', 'edit')->name('edit');
     Route::post('edit', 'update')->name('update');
     Route::get('delete', 'delete')->name('delete');
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/profile', [App\Http\Controllers\UserController::class,'show'])->name('profile');
-    Route::put('/profile', [App\Http\Controllers\UserController::class,'profileUpdate'])->name('profile_edit');
 });
 
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', 'IndexController@index')->name('index');
-    
-});
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
 
 use App\Http\Controllers\UserController;
 Route::controller(UserController::class)->middleware('auth')->group(function () {
     Route::get('/users', 'index')->name('users');
-    
+    Route::get('/profile', 'show')->name('profile');
+    Route::put('/profile', 'profileUpdate')->name('profile_edit');
 });
 
-
-
+use App\Http\Controllers\LikeController;
+Route::controller(LikeController::class)->middleware('auth')->group(function () {
+    Route::post('/like/{id}', 'store')->name('like');
+    Route::delete('/unlike/{id}', 'destroy')->name('unlike');
+});

@@ -37,6 +37,46 @@ class User extends Authenticatable
     
     
     
+    public function likes()
+    {
+        return $this->belongsToMany(Trip::class,'likes','user_id','trip_id')->withTimestamps();
+    }
+
+    //この投稿に対して既にlikeしたかどうかを判別する
+    public function islike($tripId)
+    {
+        return $this->likes()->where('trip_id',$tripId)->exists();
+    }
+
+    //isLikeを使って、既にlikeしたか確認したあと、いいねする（重複させない）
+    public function like($tripId)
+    {
+        $exist = $this->islike($tripId);
+        
+        if($exist){
+            return false;
+        //もし既に「いいね」していたら何もしない
+        } else {
+            $this->likes()->attach($tripId);
+            return true;
+        }
+    }
+
+    //isLikeを使って、既にlikeしたか確認して、もししていたら解除する
+    public function unlike($tripId)
+    {
+        $exist = $this->islike($tripId);
+        
+        if($exist){
+        //もし既に「いいね」していたら消す
+            $this->likes()->detach($tripId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
     
 
     /**
