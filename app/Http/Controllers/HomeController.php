@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Trip::all();
+        $posts = Trip::all()->sortByDesc('updated_at');
         $posts->load('user');
         
         return view('home', ['posts' => $posts]);

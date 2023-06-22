@@ -54,13 +54,11 @@
                                         <p class="card-text">
                                             <td>{{ Str::limit($trip->body, 250) }}</td>
                                         </p>
-                                        <p class="card-text">
-                                            <small class="text-muted">
-                                                <div class="date">更新日
-                                                   {{--{{ $post->updated_at->format('Y年m月d日') }} --}}
-                                                </div>
-                                            </small>
-                                        </p>
+                                        <small class="text-muted">
+                                            <div class="date">更新日
+                                               {{ $trip->updated_at->format('Y年m月d日') }}
+                                            </div>
+                                        </small>
                                     </div>
                                 </div>
                             </div>

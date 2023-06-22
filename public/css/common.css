@@ -52,4 +52,17 @@ body {
 .photo img {
   -o-object-fit: cover;
      object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  margin-top: 10px;
+}
+
+.icon {
+  margin-bottom: 10px;
 }
