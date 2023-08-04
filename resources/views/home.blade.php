@@ -18,7 +18,7 @@
                                     <div class="photo">
                                         <img src="{{ secure_asset('storage/image/'. $trip->image_path) }}" alt="" height="350" width="480">
                                     </div>
-                                    <div class="btn-group">
+                                    <div class="btn-group d-flex justify-content-between">
                                         @if(Auth::id() !=$trip->user_id)
                                             @if(Auth::user()->islike($trip->id))
                                                 {!! Form::open(['route' => ['unlike', $trip->id], 'method' => 'delete']) !!}
@@ -30,11 +30,11 @@
                                                 {!! Form::close() !!}
                                             @endif
                                         @endif
-                                        <span>
+                                        <div>
         			                    	<a href='https://www.google.com/maps/search/?api=1&query={{ $trip->map }}'>
                                                 <img src="{{ secure_asset('storage/icon/google_maps_new_logo_icon_159147.png') }}" alt="" height="25" width="25">
                                             </a>
-        		                        </span>
+        		                        </div>
         		                    </div>
                                     <p class="card-text">
                                         <td>{{ Str::limit($trip->body, 250) }}</td>
